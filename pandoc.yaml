@@ -1,0 +1,13 @@
+from: markdown+pipe_tables+raw_attribute+yaml_metadata_block+fancy_lists+startnum+task_lists+table_captions+simple_tables+multiline_tables+grid_tables+autolink_bare_uris+tex_math_dollars+raw_html+native_divs+native_spans+fenced_divs+bracketed_spans+fenced_code_attributes+backtick_code_blocks+inline_code_attributes
+to: docx
+
+table-of-contents: false
+toc-depth: 3
+number-sections: false
+
+reference-doc: src/styles.dotx
+
+metadata:
+  lang: es-ES
+  papersize: a4
+  geometry: 'left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm'

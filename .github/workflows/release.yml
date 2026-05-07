@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_run:
+    workflows: ['Build']
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v11
+        with:
+          workflow: build.yml
+          name: generated-content
+          path: dist/
+          check_artifacts: true
+          github_token: ${{ secrets.PERSONAL_TOKEN }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+          generate_release_notes: true

@@ -34,4 +34,3 @@ jobs:
           name: generated-content
           path: dist/
           retention-days: 7
-          if-no-files-found: error

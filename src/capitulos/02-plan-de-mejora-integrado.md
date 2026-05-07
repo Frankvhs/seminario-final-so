@@ -1,102 +1,50 @@
 # 2. Plan de Mejora Integrado
 
-## 2.1. Resumen de acciones por equipo
+## Tabla Maestra de Acciones
 
-### PC-REC (Recepción - Celeron, 2GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Migrar a Xubuntu 22.04 | R,S,O | Instalación limpia, Xfce ligero | Analista soberanía |
-| Instalar LibreOffice | R,S | Suite ofimática libre | Analista rendimiento |
-| Configurar Versat en WINE | S | Software nacional obligatorio | Analista seguridad |
-| Cifrado de /home | Seg | Protección datos clientes | Analista seguridad |
+### 1. Acciones de Rendimiento y Energía (Analista: [Nombre])
 
-### PC-DES1-2 (Despacho - Core 2 Duo, 2GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Migrar a Linux Mint Xfce | R,S,O | Extensión vida útil +5 años | Analista soberanía |
-| Configurar governor powersave | R,E | Ahorro energético 25% | Analista rendimiento |
-| Deshabilitar servicios innecesarios | R,E,S | Limpieza de bloatware | Analista seguridad |
+| Acción concreta                                                                  | Equipo(s) objetivo     | Impacto esperado                          | Relación con otros ejes                       |
+| :------------------------------------------------------------------------------- | :--------------------- | :---------------------------------------- | :-------------------------------------------- |
+| Reducir `vm.swappiness` a 10 y aumentar páginafile en SSD (si se añade)          | Director General       | Menor uso de disco como RAM               | Seguridad: sin impacto negativo               |
+| Cambiar plan de energía a "Ahorro energético" y desactivar servicios de indexado | Director Económico     | Reduce consumo eléctrico ~15%             | Obsolescencia: reduce calor en hardware viejo |
+| Reemplazar HDD por SSD (reutilizado de otro equipo)                              | RRHH                   | Aumenta velocidad de arranque y respuesta | Soberanía: no depende de HW nuevo             |
+| Aplicar `powertop --auto-tune` si se migra a Linux                               | Todos (post-migración) | Ahorro energético adicional 20-30%        | -                                             |
 
-### PC-DIR (Dirección - Pentium, 4GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Dual boot Xubuntu + Windows | S,O | Mantener compatibilidad | Analista soberanía |
-| VM Windows para Versat | S | Aislado optimizado | Analista seguridad |
-| Desfragmentación HDD semanal | R | Mejora tiempos acceso | Analista rendimiento |
-| Reducir swappiness en Windows | R,RAM | 4GB RAM limitada | Analista rendimiento |
+### 2. Acciones de Soberanía y Lucha contra Obsolescencia (Analista: [Nombre])
 
-### PC-ADM1-3 (Administrativos - i3, 4GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Deshabilitar telemetría | R,S | +5% CPU libre | Analista soberanía |
-| Eliminar bloatware | R,S | winget remove | Analista soberanía |
-| Aumentar espacio swap a 8GB | R | Manejo RAM limitada | Analista rendimiento |
-| Configurar actualizaciones manuales | Seg | Control sobre parches | Analista seguridad |
+| Acción concreta                                                           | Equipo(s) objetivo           | Justificación                                                | Relación con otros ejes                        |
+| :------------------------------------------------------------------------ | :--------------------------- | :----------------------------------------------------------- | :--------------------------------------------- |
+| **Migración planificada a Xubuntu 24.04** (Linux ligero)                  | Director General y Económico | Extiende vida útil en >5 años, elimina dependencia Microsoft | Rendimiento: mejora en equipos con 4GB o menos |
+| Reemplazar Office por **LibreOffice** + **OnlyOffice**                    | Todos                        | Soberanía tecnológica, sin coste de licencia                 | Seguridad: parches regulares de la comunidad   |
+| Desactivar servicios de telemetría (si se mantiene Windows temporalmente) | RRHH                         | Evita degradación por tiempo y spyware                       | Rendimiento: libera CPU/RAM                    |
+| Migrar AutoCAD LT a **FreeCAD** + Formación básica                        | RRHH                         | Elimina software privativo no usado realmente                | Energía: menor uso de GPU innecesario          |
 
-### PC-TEC (Técnico - i5, 8GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Evaluar migración a Ubuntu Studio | S,O | Alternativa a AutoCAD | Analista soberanía |
-| Instalar FreeCAD como alternativa | S | Soberanía tecnológica | Analista soberanía |
-| Mantener Windows con hardening | Seg | Por si requiere AutoCAD | Analista seguridad |
+### 3. Acciones de Seguridad (Analista: [Nombre])
 
-### SRV-LOCAL (Servidor - Xeon, 16GB RAM)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Actualizar a Ubuntu 24.04 LTS | O,Seg | Soporte hasta 2029 | Analista soberanía |
-| Configurar governor powersave persistente | E,R | systemd service | Analista rendimiento |
-| Hardening SSH (solo clave) | Seg | fail2ban + no root | Analista seguridad |
-| Deshabilitar FTP, usar SFTP | Seg | Más seguro | Analista seguridad |
-| Ajustar swappiness=10 | R,E | Reduce escritura disco | Analista rendimiento |
-| Configurar logwatch | Seg | Monitoreo diario | Analista seguridad |
+| Acción concreta                                                              | Equipo(s) objetivo        | Herramienta               | Relación con otros ejes                           |
+| :--------------------------------------------------------------------------- | :------------------------ | :------------------------ | :------------------------------------------------ |
+| Configurar **ufw** deny incoming, allow SSH                                  | Todos (si migran a Linux) | `ufw`, `iptables`         | Aumenta seguridad sin afectar rendimiento         |
+| Sustituir FTP por **SFTP** en el servidor Ubuntu                             | Servidor + todos          | `vsftpd` con SSL o `sshd` | Confidencialidad de los archivos compartidos      |
+| Cifrar memorias USB con **VeraCrypt** o LUKS                                 | RRHH (nóminas)            | `veracrypt`               | Impacta usabilidad (mejorable con automatización) |
+| Implementar gestor de contraseñas (Bitwarden) y deshabilitar cuenta invitado | Director General          | Bitwarden                 | Soberanía: Bitwarden es open source               |
 
-### Servidor legacy C (Windows Server 2012)
-| Acción | Ejes | Descripción | Responsable |
-|--------|------|-------------|--------------|
-| Apagar y desconectar de red | O,Seg,E | Elimina consumo 145W | Coordinador |
-| Migrar datos a SRV-LOCAL | O | Preservar información | Analista soberanía |
-| Conservar solo para pruebas offline | O | Hardware de respaldo | Analista seguridad |
+## Matriz de Consistencia (Coordinador técnico)
 
-## 2.2. Acciones transversales
+Verificar que ninguna acción de un rol anula la de otro:
 
-| Acción | Ejes | Equipos | Comando/Procedimiento |
-|--------|------|---------|----------------------|
-| Bloquear telemetría Microsoft | R,S | Todos Windows | Modificar hosts |
-| Configurar política contraseñas | Seg | Todos | net accounts /minpwlen:8 |
-| Programa de desfragmentación | R | HDD | Tarea programada |
-| Backup semanal automático | Seg,O | Servidor | rsync + cron |
-| Documentación de configuraciones | Todos | Todos | Wiki interna |
+- ¿Desactivar telemetría en Windows bloquea actualizaciones de seguridad? → **Solución:** Usar `wuauserv` solo para parches críticos (vía PowerShell).
+- ¿Migrar a Linux afecta el uso de Versat Sarasola? → **Riesgo alto:** Versat Sarasola (software cubano) **no tiene** versión nativa Linux. → **Acción correctora:** Mantener Windows en un equipo (RRHH) como servidor de aplicaciones o usar Wine/Crossover (probado previamente en VM).
+- ¿El firewall restrictivo bloquea la impresión Zebra? → Permitir puerto 9100 solo desde la IP de RRHH.
 
-## 2.3. Conflictos y resoluciones
+## Plan de Implementación (Simulación)
 
-### Conflicto 1: Telemetría vs Parches de seguridad
-**Problema**: Deshabilitar telemetría también bloquea actualizaciones críticas.
-**Resolución**: Configurar Windows Update para descargar solo parches de seguridad, permitir en firewall IPs oficiales de Microsoft Update, aplicar manualmente parches críticos mensualmente.
+| Fase            | Acciones                                                 | Responsable          | Entorno de simulación                  |
+| :-------------- | :------------------------------------------------------- | :------------------- | :------------------------------------- |
+| 1. Preparación  | Instalar VirtualBox, clonar Windows 10 actual en VM      | Coordinador          | VM con 2GB RAM (simula Dir. Económica) |
+| 2. Migración    | Instalar Xubuntu en VM, configurar LibreOffice           | Analista Soberanía   | VM Xubuntu                             |
+| 3. Hardening    | Aplicar `ufw`, `lynis audit`, deshabilitar servicios     | Analista Seguridad   | Ambas VMs                              |
+| 4. Rendimiento  | Ejecutar `powertop`, ajustar `swappiness`, medir tiempos | Analista Rendimiento | VM Linux                               |
+| 5. Verificación | Probar Versat Sarasola con Wine (si aplica)              | Coordinador          | VM Linux                               |
 
-### Conflicto 2: Rendimiento vs Seguridad (firewall restrictivo)
-**Problema**: Firewalls muy restrictivos afectan conexiones legítimas al servidor.
-**Resolución**: Reglas por subred /24, permitiendo tráfico interno total pero bloqueando todo entrante desde WAN.
-
-### Conflicto 3: Migración a Linux vs Versat Sarasola
-**Problema**: Versat Sarasola requiere Windows.
-**Resolución**: VM de Windows minimalista (4GB RAM, 50GB HDD) con recursos justos, o WINE con configuración específica en puestos con suficiente RAM.
-
-## 2.4. Cronograma de implementación
-
-| Semana | Analista rendimiento | Analista soberanía | Analista seguridad | Coordinador |
-|--------|---------------------|-------------------|-------------------|-------------|
-| 1 | Medición baseline | Inventario software | Escaneo vulnerabilidades | Consolidar diagnóstico |
-| 2 | Ajustes governor, swappiness | Migración PC-REC, PC-DES | Hardening servidor | Documentar avances |
-| 3 | Optimización PC-ADM | Configurar VM Versat | Firewall, fail2ban | Revisión consistencia |
-| 4 | Validación métricas | Actualización servidor | Logs, backups | Informe final |
-
-## 2.5. Matriz de trazabilidad requisito-acción
-
-| Requisito No Funcional | Acciones relacionadas | Verificación |
-|------------------------|----------------------|---------------|
-| Vida útil +5 años | Migración a Linux, actualización servidor | Fecha soporte OS |
-| Consumo -30% | Governor powersave, apagar C | Medición powertop |
-| Soberanía tecnológica | LibreOffice, Linux, eliminar telemetría | % software libre |
-| Confidencialidad | Cifrado /home, SSH solo clave | Auditoría |
-| Disponibilidad | RAID1, backup automático | Prueba restauración |
-| Mínimo privilegio | Deshabilitar root SSH, UAC alto | Revisión permisos |
+_(Fin del plan de mejora. Extensión: máximo 4 páginas)_

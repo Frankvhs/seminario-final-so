@@ -1,6 +1,6 @@
 # Anexo Individual – Analista de Seguridad
 
-- **Nombre del estudiante:** [Tu nombre completo]
+- **Nombre del estudiante:** Alex Dayan Rodríguez Hernández
 - **Rol desempeñado:** Analista de Seguridad
 - **Nombre del equipo:** Sumifer-2026
 - **Fecha de entrega:** 8/05/2026
@@ -111,31 +111,21 @@ Pruebas en máquina virtual Windows 10 Ultimate (sin licencia) y Ubuntu 20.04 Se
 ### Equipo A -- Windows 10 x64
 
 1. **Puertos iniciales:**
-   netstat -ano | findstr "LISTENING"
-
-text
+   `netstat -ano | findstr "LISTENING"`
 
 2. **SMBv1 eliminado:**
-   Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
-
-text
+   `Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol`
 
 3. **Bloqueo FTP:**
-   netsh advfirewall firewall add rule name="Bloquear FTP" dir=out remoteport=21 protocol=TCP action=block
-
-text
+   `netsh advfirewall firewall add rule name="Bloquear FTP" dir=out remoteport=21 protocol=TCP action=block`
 
 4. **RemoteRegistry desactivado:**
-   sc config "RemoteRegistry" start= disabled
-   sc stop "RemoteRegistry"
-
-text
+   `sc config "RemoteRegistry" start= disabled`  
+   `sc stop "RemoteRegistry"`
 
 5. **Permisos restringidos:**
-   icacls "C:\Compartida" /remove Everyone
-   icacls "C:\Compartida" /grant "sumifer\niurka:(OI)(CI)R"
-
-text
+   `icacls "C:\Compartida" /remove Everyone`  
+   `icacls "C:\Compartida" /grant "sumifer\niurka:(OI)(CI)R"`
 
 ### Servidor Ubuntu
 
@@ -147,10 +137,12 @@ sudo systemctl disable vsftpd --now
 sudo apt install ssh
 sudo find / -perm /4000 -type f -exec ls -l {} \;
 sudo lynis audit system
+```
+
 Lynis subió de 58 a 79 tras aplicar las medidas.
 
-5. Conflicto entre ejes resuelto (Seguridad ↔ Soberanía)
+## 5. Conflicto entre ejes resuelto (Seguridad ↔ Soberanía)
+
 Conflicto: El analista de soberanía propuso desactivar completamente telemetría y Windows Update para eliminar dependencia de Microsoft y evitar fallos en sistemas pirateados. Como analista de seguridad advertí que sin esos servicios no recibiríamos parches críticos.
 
-Solución: Windows Update en modo "Notificar antes de descargar" mediante directiva de grupo, se deshabilitaron solo los servicios de telemetría que no afectan los parches (DiagTrack, dmwappushservice) y se estableció un procedimiento mensual para descargar e instalar parches manualmente con wusa.exe. Esto mantiene la soberanía y la seguridad.
-```
+Solución: Windows Update en modo "Notificar antes de descargar" mediante directiva de grupo, se deshabilitaron solo los servicios de telemetría que no afectan los parches (DiagTrack, dmwapppushservice) y se estableció un procedimiento mensual para descargar e instalar parches manualmente con `wusa.exe`. Esto mantiene la soberanía y la seguridad.

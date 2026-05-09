@@ -29,5 +29,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*
+          files: dist/**/*
           generate_release_notes: true

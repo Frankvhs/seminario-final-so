@@ -50,16 +50,9 @@
 
 | Compañero/a           | Rol          | Aspecto positivo                                  | Área de mejora                                  | Nota (2 a 5) |
 |-----------------------|--------------|---------------------------------------------------|-------------------------------------------------|--------------|
-| [Nombre compañero 1]  | Seguridad    | Detectó riesgos al modificar swap                 | Compartir lista de puertos con más anticipación | 4            |
-| [Nombre compañero 2]  | Soberanía    | Propuso alternativas a software privativo         | Mejorar comunicación entre sistemas             | 5            |
-| [Nombre compañero 3]  | Coordinador  | Facilitó el acuerdo de compromisos entre ejes     | Podría moderar mejor discusiones técnicas       | 4            |
+| Alex                  | Seguridad    | Detectó riesgos al modificar swap                 | Compartir lista de puertos con más anticipación | 4            |
+| Martín                | Soberanía    | Propuso alternativas a software privativo         | Mejorar comunicación entre sistemas             | 5            |
+| Rodny                 | Coordinador  | Facilitó el acuerdo de compromisos entre ejes     | Podría moderar mejor discusiones técnicas       | 4            |
 
 ---
 
-## 4. Planilla de autoevaluación y coevaluación (plantilla anexo.md)
-
-(Puedes copiar y adaptar el formato de tablas exactamente igual a lo mostrado en el archivo `anexo.md` para cumplir con el formato.)
-
----
-
-**Nombre y fecha:** [Firma digital o nombre claro] - [Fecha]

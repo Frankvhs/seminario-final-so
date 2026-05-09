@@ -9,11 +9,13 @@ El trabajo final es continuación del seminario final de Arquitectura de Computa
 
 Actualmente Sumifer enfrenta problemas de rendimiento, gestión de procesos, uso de memoria y seguridad en equipos con sistemas operativos diferentes. Se busca optimizar sin comprar hardware nuevo, alargar la vida útil al menos 5 años, reducir el consumo eléctrico y aumentar la soberanía tecnológica, todo ello respetando los principios de seguridad: integridad, confidencialidad, disponibilidad y mínimo privilegio.
 
-Equipos a analizar (ejemplo, ajustar según entidad):
+Equipos a analizar:
 
-- Equipo A: Windows 10/11 (puesto de administración)
-- Equipo B: Distribución Linux basada en Debian/Ubuntu (servidor de archivos local)
-- Equipo C: Windows Server 2012 (servidor legacy, fuera de soporte oficial)
+| Equipo       | Puesto                      | Hardware                              | SO actual                     | Software clave                                            |
+| ------------ | --------------------------- | ------------------------------------- | ----------------------------- | --------------------------------------------------------- |
+| **Equipo A** | Director General            | Intel Pentium G4400, 4GB RAM, 1TB HDD | Windows 10 Ultimate           | Office 2019, Versat Sarasola, TeamViewer                  |
+| **Equipo B** | Directora Económica         | Intel Core 2 Duo, 2GB RAM, 320GB HDD  | Windows 10 Ultimate (32 bits) | Office 2016, Versat Sarasola, Chrome, escáner Canon       |
+| **Equipo C** | Técnica de Recursos Humanos | Intel Core i5, 8GB RAM, 1TB HDD       | Windows 10 Ultimate           | Office 2019, Versat Sarasola, AutoCAD LT, impresora Zebra |
 
 ## Conformación de equipos y roles
 

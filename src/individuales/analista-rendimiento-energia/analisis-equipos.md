@@ -1,9 +1,9 @@
 # Análisis de Equipos – Analista de Rendimiento y Energía
 
-- **Nombre del estudiante:** [Tu nombre completo]
+- **Nombre del estudiante:** Frank Abel
 - **Rol desempeñado:** Analista de Rendimiento y Energía
-- **Nombre del equipo:** [Nombre del equipo]
-- **Fecha de entrega:** [Fecha actual]
+- **Nombre del equipo:** Sumifer-2026
+- **Fecha de entrega:** 09/05/2026
 
 ---
 

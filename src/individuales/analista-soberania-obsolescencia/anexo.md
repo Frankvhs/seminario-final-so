@@ -1,9 +1,9 @@
 ﻿# Anexo Individual – Sistema Operativo y Trabajo por Roles
 
-**Nombre del estudiante:** Martín Alejandro Garcia Babastro
-**Rol desempeñado:** Analista de Soberanía y Obsolescencia
-**Nombre del equipo:** Sumifer-2026
-**Fecha de entrega:** 8/5/2026
+- **Nombre del estudiante:** Martín Alejandro Garcia Babastro
+- **Rol desempeñado:** Analista de Soberanía y Obsolescencia
+- **Nombre del equipo:** Sumifer-2026
+- **Fecha de entrega:** 8/5/2026
 
 ---
 

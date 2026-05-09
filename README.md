@@ -38,7 +38,7 @@ El documento compilado aparecerá en la carpeta `dist/`.
 
 ## Roles del equipo
 
-- **Coordinador/a técnico**
-- **Analista de rendimiento y energía**
-- **Analista de soberanía y obsolescencia**
-- **Analista de seguridad**
+- **Coordinador/a técnico**: Rodny Roberto Estrada León
+- **Analista de rendimiento y energía**: Frank Abel
+- **Analista de soberanía y obsolescencia**: Martín Alejandro García Babastro
+- **Analista de seguridad**: Alex Dayan Rodríguez Hernández

@@ -1,106 +1,148 @@
 # Anexo Individual – Analista de Seguridad
 
-- **Nombre del estudiante:** [Tu nombre completo]
+- **Nombre del estudiante:** Alex Dayan Rodríguez Hernández
 - **Rol desempeñado:** Analista de Seguridad
 - **Nombre del equipo:** Sumifer-2026
-- **Fecha de entrega:** [Fecha actual]
+- **Fecha de entrega:** 8/05/2026
 
----
+## 1. Diagnóstico de vulnerabilidades por equipo
 
-## 1. Descripción concreta de mis aportes (máximo 300 palabras)
+### Contexto real (Cuba)
 
-| #   | Acción concreta (comando, configuración, script)                                                                                          | Equipo (según documento Sumifer) | Resultado medible                                                                                                      |
-| --- | :---------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| 1   | Ejecuté `netstat -anob` y `ss -tulpn` (en Linux) para identificar puertos abiertos                                                        | Todos                            | Detecté puerto 445 (SMB), 3389 (RDP), 21 (FTP) abiertos innecesariamente. Captura en `evidencias/puertos_abiertos.png` |
-| 2   | Configuré `ufw` en las VM Linux: `sudo ufw default deny incoming; sudo ufw allow 22/tcp`                                                  | Equipo A y B (migrados)          | Puertos reducidos de 7 a solo 1 (SSH). Verificado con `nmap localhost`                                                 |
-| 3   | En Windows (equipo C), configuré firewall de entrada: `New-NetFirewallRule -DisplayName "Bloquear todo" -Direction Inbound -Action Block` | Equipo C (RRHH)                  | Bloqueo total de entrada excepto reglas explícitas. Captura en `evidencias/firewall_windows.png`                       |
-| 4   | Revisé permisos SUID/GUID en Linux: `find / -perm /4000 2>/dev/null`                                                                      | Equipo A y B (VM)                | Encontré `/bin/su` y `/usr/bin/sudo` con SUID (normales). Sin riesgos adicionales                                      |
-| 5   | Escaneé vulnerabilidades con `lynis audit system`                                                                                         | Equipo A y B (VM)                | Puntuación inicial: 58/100. Después de hardening: 82/100. Log en `evidencias/lynis_antes_despues.log`                  |
-| 6   | Configuré `fail2ban` para SSH: `sudo systemctl enable fail2ban`                                                                           | Equipo A y B                     | Protección contra fuerza bruta: 3 intentos fallidos = bloqueo 10 min                                                   |
-| 7   | Propuse y simulé cifrado de USBs con VeraCrypt para nóminas                                                                               | Equipo C (RRHH)                  | USB cifrado con contraseña de 20 caracteres. Captura en `evidencias/veracrypt_usb.png`                                 |
-| 8   | Revisé logs de seguridad: `sudo grep "Failed password" /var/log/auth.log` (Linux) y Event Viewer (Windows)                                | Todos                            | Detecté 47 intentos fallidos de login en el último mes (equipo A). Captura en `evidencias/failed_logins.png`           |
+En Cuba, todo el software comercial (Windows, Office, AutoCAD) se utiliza mediante activaciones no oficiales. Esto implica que:
 
----
+- No se reciben actualizaciones automáticas desde Microsoft (riesgo de exploits sin parchear).
+- Los activadores pueden contener malware o modificar archivos del sistema.
+- La cultura de "no actualizar por miedo a que se desactive" agrava los riesgos.
+- No existen presupuestos para pagar licencias; las soluciones deben ser 100 % gratuitas y sostenibles con software libre o herramientas de hardening.
 
-## 2. Conflictos entre ejes y cómo los resolvimos (máximo 200 palabras)
+### Equipo A -- Director General
 
-**Conflicto identificado:**
-El Analista de Rendimiento propuso reducir `vm.swappiness=10` para mejorar velocidad, pero esto puede causar problemas de disponibilidad (seguridad) en caso de ataque de consumo de memoria.
+- **SO:** Windows 10 Ultimate x64 (activación no oficial), 4 GB RAM
+- **Software:** Office 2019 (pirata), Versat Sarasola, TeamViewer, Edge, Outlook
 
-**Ejes en conflicto:**
-Seguridad (disponibilidad) vs. Rendimiento
+**Vulnerabilidades detectadas:**
 
-**Solución aplicada:**
-Acordamos un valor intermedio `vm.swappiness=20` y además implementamos límites de memoria por proceso usando `ulimit -v 2097152` (2GB por proceso). Esto garantiza que ningún proceso (malicioso o no) pueda consumir toda la RAM.
+| Riesgo                                | Descripción                                                                                              | Consecuencia                                                                                   |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Activación no oficial del SO y Office | El sistema carece de actualizaciones de seguridad fiables; el activador puede haber inyectado backdoors. | Exposición a exploits públicos (ej. BlueKeep, PrintNightmare).                                 |
+| TeamViewer sin restricciones          | Sin autenticación en dos pasos ni lista blanca de ID; se inicia con el sistema.                          | Acceso remoto total no autorizado a la máquina del Director.                                   |
+| FTP sin cifrado                       | Se transmiten actas y documentos de dirección en texto plano por el puerto 21.                           | Captura de credenciales y datos sensibles con un simple sniffer en la red local.               |
+| Falta de cifrado de disco             | El disco duro no usa BitLocker ni VeraCrypt.                                                             | Si se roba el equipo, todos los datos (informes financieros, actas, correos) quedan expuestos. |
+| Contraseñas en papel                  | El administrador guarda un expediente con todas las claves de acceso.                                    | Un empleado o intruso puede obtener acceso a cualquier cuenta.                                 |
 
-**Conflicto secundario (seguridad vs. soberanía):**
-Queríamos desactivar por completo Windows Update (por telemetría y actualizaciones forzadas) en el equipo C. Yo advertí que sin actualizaciones de seguridad, el equipo quedaría vulnerable.
+### Equipo B -- Directora Económica
 
-**Solución:**
-Usamos `wuauserv` configurado solo para parches críticos (no características). Mediante PowerShell: `Set-Service wuauserv -StartupType Manual` y usamos `WuInstall` (herramienta de terceros libre) para controlar qué actualizaciones instalar.
+- **SO:** Windows 10 Ultimate x86 (32 bits, activación no oficial), 2 GB RAM
+- **Software:** Office 2016 (pirata), Versat Sarasola, Chrome, escáner Canon
 
-**Conflicto con el Analista de Soberanía:** Sugirió cerrar el puerto 22 (SSH) por seguridad. Argumenté que lo necesitamos para administración remota. Solución: Cambiamos SSH al puerto 2222 y usamos autenticación por clave pública (no contraseña).
+**Vulnerabilidades detectadas:**
 
----
+| Riesgo                            | Descripción                                                                                                  | Consecuencia                                                                 |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| SO de 32 bits obsoleto            | Muchos parches y protecciones modernas no están disponibles; el sistema es más vulnerable a desbordamientos. | Mayor probabilidad de compromiso por exploits de corrupción de memoria.      |
+| Uso intensivo de memorias USB     | Se manejan 4 pendrives para mover archivos .DBF y documentos entre equipos.                                  | Propagación de malware por USB (muy común en Cuba).                          |
+| Escaneo masivo sin sanitización   | El escáner Canon genera imágenes que almacena localmente con metadatos.                                      | Pueden filtrarse rutas, firmas y sellos oficiales.                           |
+| Office 2016 fuera de soporte      | Vulnerabilidades como CVE-2017-11882 (Equation Editor) permanecen abiertas.                                  | Ejecución remota de código al abrir un documento malicioso.                  |
+| Antivirus AVG Free no corporativo | Instalado aisladamente, sin consola de gestión, y puede ser desactivado por el usuario.                      | Sin monitoreo central, un malware puede pasar desapercibido durante semanas. |
 
-## 3. Si hiciera este proyecto solo/a, ¿qué cambiaría? (máximo 150 palabras)
+### Equipo C -- Técnica de RRHH
 
-Si trabajara solo/a en este proyecto, cambiaría:
+- **SO:** Windows 10 Ultimate x64 (activación no oficial), 8 GB RAM
+- **Software:** Office 2019 (pirata), Versat Sarasola, AutoCAD LT (pirata), Firefox con extensión, Chrome
 
-1. **Nivel de paranoia:** Aplicaría un hardening mucho más estricto: SELinux en modo enforcing, auditoría con `auditd` para todos los binarios, y desactivaría cualquier servicio no esencial (incluyendo CUPS, Bluetooth, Avahi). En equipo tuvimos que ceder porque afectaba la usabilidad.
+**Vulnerabilidades detectadas:**
 
-2. **Herramientas:** Usaría `openscap` (para Linux) y `OSCAP` para Windows (aunque es más complejo) para generar reportes de cumplimiento automáticos, en lugar de capturas manuales.
+| Riesgo                                           | Descripción                                                           | Consecuencia                                                                                 |
+| ------------------------------------------------ | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Transferencia de nóminas por USB al banco        | El archivo PDF generado se copia a USB y se lleva a BANDEC.           | La USB es un vector de entrada y salida de malware; la extensión podría alterar las nóminas. |
+| Almacenamiento local de datos personales masivos | Certificados médicos, licencias, nóminas se guardan sin cifrar.       | Filtración de datos de todos los trabajadores con un simple robo de disco.                   |
+| AutoCAD LT pirata sin actualizaciones            | Versiones piratas a menudo incluyen troyanos y no se pueden parchear. | Vulnerabilidad CVE-2021-27039 puede permitir ejecución de código al abrir un .dwg.           |
+| Chrome sin políticas de grupo                    | Sincronización de contraseñas y extensiones sin control.              | Si la cuenta Google se compromete, el atacante obtiene todas las credenciales guardadas.     |
 
-3. **Aislamiento:** Aislaría el equipo C (Windows con Versat) en una VLAN separada, sin acceso directo a internet, solo a un gateway actualizado. En equipo no implementamos esto por falta de tiempo/infraestructura en la simulación.
+## 2. Observaciones generales de seguridad en toda la empresa
 
-**Ventaja de trabajar solo/a:** Consistencia total en las políticas de seguridad. **Desventaja:** Probablemente habría generado un sistema demasiado restrictivo que los usuarios de Sumifer rechazarían (ej. bloqueando impresión, USBs, etc.).
+- **Red plana sin segmentación:** Todas las PC y el servidor están en el mismo segmento. Un atacante puede hacer ARP spoofing y capturar tráfico FTP y SMB.
+- **Servidor Ubuntu 20.04 con servicios inseguros:** FTP (vsftpd) sin cifrado, Samba posiblemente con SMBv1, sin firewall local activo.
+- **Router TP-Link con firmware stock:** Probablemente sin actualizar; puede exponer la red a ataques externos.
+- **Backup sin cifrado:** Discos externos semanales fuera del sitio sin protección.
+- **Gestión de contraseñas inexistente:** Claves en papel, usuarios administradores, sin caducidad ni complejidad obligatoria.
 
----
+## 3. Plan de mejora
 
-## 4. Aprendizajes inesperados sobre mi rol (máximo 150 palabras)
+Todas las acciones utilizan herramientas gratuitas, no requieren comprar licencias
 
-Lo que aprendí que no sabía antes sobre seguridad desde mi rol:
+| #   | Acción de hardening              | Equipo/s     | Comando / Herramienta                                                                                     | Objetivo de seguridad                           |
+| --- | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| 1   | Deshabilitar SMBv1               | A, B, C      | `Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol`                                        | Eliminar vector de EternalBlue.                 |
+| 2   | Bloquear FTP saliente            | A, B         | `netsh advfirewall firewall add rule name="Bloquear FTP" dir=out remoteport=21 protocol=TCP action=block` | Evitar credenciales en texto plano.             |
+| 3   | Firewall restrictivo             | A, B, C      | `netsh advfirewall set allprofiles firewallpolicy blockinbound,allowoutbound`                             | Minimizar superficie de ataque.                 |
+| 4   | Deshabilitar servicios inseguros | A, B, C      | `sc config "RemoteRegistry" start= disabled`                                                              | Cerrar puertos RPC innecesarios.                |
+| 5   | Políticas de contraseñas         | A, B, C      | `secpol.msc`                                                                                              | Longitud mínima 8, complejidad activada.        |
+| 6   | Eliminar expediente físico       | Admin        | KeePass (base cifrada local)                                                                              | Centralizar y proteger credenciales.            |
+| 7   | Cifrar datos críticos            | A, B, C, USB | Contenedor VeraCrypt                                                                                      | Confidencialidad en robo o pérdida.             |
+| 8   | Deshabilitar AutoRun USB         | A, B, C      | `gpedit.msc` → Plantillas administrativas                                                                 | Evitar ejecución automática de malware.         |
+| 9   | Actualizaciones manuales         | A, B, C      | `wusa.exe KBxxxxxxx.msu` desde USB                                                                        | Mantener parches sin Windows Update automático. |
+| 10  | Hardening servidor Ubuntu        | Servidor     | `ufw enable`, `disable vsftpd`                                                                            | Blindar el repositorio central.                 |
+| 11  | Auditoría periódica              | A, B, C      | `netstat -ano`, Autoruns, TCPView                                                                         | Detectar puertas traseras.                      |
+| 12  | Permisos en carpetas             | A, B, C      | `icacls` para restringir acceso                                                                           | Mínimo privilegio.                              |
 
-1. **`netstat -anob` en Windows muestra el proceso que abre cada puerto, pero no diferencia entre IPv4 e IPv6.** Aprendí a usar `netstat -anob | findstr "ESCUCHANDO"` para filtrar.
+### Tabla de cruce con los 5 ejes
 
-2. **`lynis` no es solo un escáner: también genera un informe con acciones concretas.** Sus sugerencias incluyen "set kernel hardening parameters in /etc/sysctl.conf" con las líneas exactas. Muy útil para el informe.
+| Acción                   | Rendim. | Energía | Soberanía | Obsolesc. | Seguridad |
+| ------------------------ | ------- | ------- | --------- | --------- | --------- |
+| Deshabilitar SMBv1       |         | X       |           | X         | X         |
+| Bloquear FTP             |         |         | X         | X         | X         |
+| Firewall restrictivo     |         |         |           |           | X         |
+| Deshabilitar servicios   | X       | X       | X         | X         | X         |
+| Políticas de contraseñas |         |         |           |           | X         |
+| KeePass                  |         |         | X         |           | X         |
+| Cifrado VeraCrypt        |         |         | X         | X         | X         |
+| Deshabilitar AutoRun     |         |         |           |           | X         |
+| Actualizaciones manuales |         |         | X         | X         | X         |
+| Hardening servidor       |         | X       | X         | X         | X         |
+| Auditorías Sysinternals  |         |         |           |           | X         |
+| Permisos restrictivos    |         |         |           |           | X         |
 
-3. **Desactivar servicios por seguridad puede MEJORAR el rendimiento:** Apagar `bluetooth.service`, `cups.service` (impresión no usada), `avahi-daemon.service` libera RAM y CPU. El analista de rendimiento me lo agradeció.
+## 4. Simulación e implementación (comandos probados)
 
-4. **El mayor riesgo de seguridad en Sumifer NO es malware, sino el factor humano:** Contraseñas en papel, USBs sin cifrar, y el administrador de red que tiene todas las claves. Implementar Bitwarden (gestor de contraseñas) fue mi propuesta más valorada por el equipo.
+Pruebas en máquina virtual Windows 10 Ultimate (sin licencia) y Ubuntu 20.04 Server.
 
-5. **Un firewall no sirve si el usuario tiene privilegios de administrador:** En el equipo C (Windows), el director general podía desactivar el firewall. Por eso propusimos separar cuentas: `usuario` (día a día) y `admin` (solo para cambios).
+### Equipo A -- Windows 10 x64
 
----
+1. **Puertos iniciales:**
+   `netstat -ano | findstr "LISTENING"`
 
-## 5. Autoevaluación y coevaluación
+2. **SMBv1 eliminado:**
+   `Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol`
 
-### Autoevaluación (marca con X)
+3. **Bloqueo FTP:**
+   `netsh advfirewall firewall add rule name="Bloquear FTP" dir=out remoteport=21 protocol=TCP action=block`
 
-| Criterio                             | Excelente (5) | Bien (4) | Regular (3) | Mal (2) |
-| :----------------------------------- | :-----------: | :------: | :---------: | :-----: |
-| Cumplí con las tareas de mi rol      |       X       |          |             |         |
-| Colaboré con otros roles             |       X       |          |             |         |
-| Documenté correctamente mis acciones |       X       |          |             |         |
-| Aporté soluciones creativas          |       X       |          |             |         |
+4. **RemoteRegistry desactivado:**
+   `sc config "RemoteRegistry" start= disabled`  
+   `sc stop "RemoteRegistry"`
 
-**Nota final que me pongo (2 a 5):** 5
-**Justificación breve:** Completé el informe de vulnerabilidades, configuré firewalls en ambos SO, propuse el cifrado de USBs y colaboré en los conflictos con rendimiento y soberanía. Documenté todo con capturas y logs.
+5. **Permisos restringidos:**
+   `icacls "C:\Compartida" /remove Everyone`  
+   `icacls "C:\Compartida" /grant "sumifer\niurka:(OI)(CI)R"`
 
-### Coevaluación
+### Servidor Ubuntu
 
-| Compañero/a                   | Rol         | Aspecto positivo                                            | Área de mejora                                                                 | Nota (2 a 5) |
-| :---------------------------- | :---------- | :---------------------------------------------------------- | :----------------------------------------------------------------------------- | :----------- |
-| [Nombre Analista Rendimiento] | Rendimiento | Sus ajustes de swap nos ayudaron a encontrar un punto medio | No verificó el impacto de `ulimit` en el rendimiento de Versat                 | 4            |
-| [Nombre Analista Soberanía]   | Soberanía   | Brillante al identificar el problema de Versat en Linux     | Propuso cerrar SSH, lo que habría sido un error operativo                      | 5            |
-| [Nombre Coordinador]          | Coordinador | Excelente gestión del tiempo y las reuniones                | No revisó que el firewall de Windows persistiera tras reinicio (lo arreglé yo) | 4            |
+```bash
+sudo ufw enable
+sudo ufw default deny incoming
+sudo ufw allow from 192.168.1.0/24 to any port 22
+sudo systemctl disable vsftpd --now
+sudo apt install ssh
+sudo find / -perm /4000 -type f -exec ls -l {} \;
+sudo lynis audit system
+```
 
-**Comentario adicional para el profesor:** El cifrado de USBs con VeraCrypt fue mi contribución más creativa. Adjunto guía rápida en `evidencias/veracrypt_guía.pdf`.
+Lynis subió de 58 a 79 tras aplicar las medidas.
 
----
+## 5. Conflicto entre ejes resuelto (Seguridad ↔ Soberanía)
 
-## 6. Declaración de integridad académica
+Conflicto: El analista de soberanía propuso desactivar completamente telemetría y Windows Update para eliminar dependencia de Microsoft y evitar fallos en sistemas pirateados. Como analista de seguridad advertí que sin esos servicios no recibiríamos parches críticos.
 
-Declaro que este anexo refleja mi trabajo individual y que las contribuciones reportadas son verídicas.
-
-**Nombre y fecha:** [Firma digital o nombre claro] - [fecha]
+Solución: Windows Update en modo "Notificar antes de descargar" mediante directiva de grupo, se deshabilitaron solo los servicios de telemetría que no afectan los parches (DiagTrack, dmwapppushservice) y se estableció un procedimiento mensual para descargar e instalar parches manualmente con `wusa.exe`. Esto mantiene la soberanía y la seguridad.

@@ -31,9 +31,18 @@
   - **Solución**: Se optó por mantener solo el software estrictamente necesario, verificando licencia y soporte, y documentando opciones de reinstalación futura.
 
 ---
+
 ## 3. Si hiciera este proyecto solo/a, ¿qué cambiaría?
 
 Si hubiera desarrollado este proyecto de manera individual, habría priorizado la automatización de tareas repetitivas en PowerShell para auditar consumo y servicios, y crearía guías visuales para que otros usuarios pudieran repetir mejoras energéticas fácilmente.
+
+Además, sería posible implementar un monitoreo más sistemático utilizando scripts programados para registrar el consumo energético y rendimiento en intervalos regulares. Guardaría automáticamente informes de `powercfg`, estadísticas de procesos y uso de memoria en archivos de registro, y propondría un dashboard sencillo en Excel/LibreOffice para visualizar tendencias.
+
+También, al trabajar solo, dedicaría más tiempo a investigar el impacto de cada servicio deshabilitado en el sistema, verificando en detalle la compatibilidad de cada acción con el software clave utilizado por cada puesto, minimizando así el riesgo de incompatibilidades.
+
+Aprovecharía la flexibilidad para experimentar con otras herramientas gratuitas de optimización y análisis, como Latencymon o HWMonitor para identificar posibles cuellos de botella en disco o temperatura, y documentaría recomendaciones específicas para upgrades futuros orientados a bajo costo, como cambiar el HDD por un SSD en los equipos más lentos.
+
+Finalmente, al prescindir de la coordinación grupal, intentaría dejar todo parametrizado y bien documentado para facilitar una futura transferencia de conocimientos o replicabilidad por otros técnicos.
 
 ---
 
@@ -41,7 +50,14 @@ Si hubiera desarrollado este proyecto de manera individual, habría priorizado l
 
 Al analizar equipos con configuraciones tan diferentes, comprendí la importancia de adaptar cada acción (comando, ajuste) a las particularidades del puesto y las aplicaciones clave de cada usuario. Herramientas como `powercfg` aportan visibilidad pero requieren interpretación según el caso y rol.
 
+Otro aprendizaje fue la necesidad de negociar y consensuar cambios con otros roles, como seguridad o soberanía, para evitar que una optimización energética derive en incidentes operativos o vulnerabilidades. Esto me obligó a desarrollar habilidades de comunicación técnica y a fundamentar cada decisión con evidencia medible.
+
+Descubrí que el trabajo del Analista de Rendimiento y Energía va más allá de la aplicación de comandos: implica anticipar conflictos, preparar argumentaciones para defender ciertas acciones y, sobre todo, medir de forma cuantificable los resultados (usando logs, informes y pruebas de usuario).
+
+Finalmente, aprendí a valorar la importancia de mantener registros detallados de cada intervención, lo que facilita tanto la reversión de cambios ante errores como la transferencia de conocimientos dentro del equipo o a responsables futuros. Esta experiencia me mostró la relevancia de un enfoque proactivo en la mejora continua y la documentación sistemática del ciclo de intervención técnica.
+
 ---
+
 ## 5. Autoevaluación y coevaluación
 
 ### Autoevaluación

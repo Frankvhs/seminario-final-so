@@ -31,8 +31,18 @@
   - **Solución**: Se optó por realizar únicamente cambios no intrusivos y documentar claramente cualquier prueba de concepto sobre software nuevo, con respaldo previo.
 
 ---
+## 3. Si hiciera este proyecto solo/a, ¿qué cambiaría?
 
-## 3. Autoevaluación y coevaluación
+Si hubiera desarrollado este proyecto de manera individual, habría priorizado la automatización de tareas repetitivas empleando scripts propios en bash y PowerShell para auditar consumo energético y optimizar servicios en todos los equipos desde el inicio. Centrando la atención en los equipos que presentaban mayores cuellos de botella (Dirección Económica y Server), habría simplificado la migración a Linux únicamente cuando fuera indispensable para aplicaciones clave, reduciendo así problemas de compatibilidad. Además, documentaría el flujo completo en un único repositorio con reportes generados automáticamente y gráficos de consumo, lo que facilitaría el seguimiento de impactos luego de cada ajuste. La toma de decisiones sería más ágil, aunque reconocería que podría pasar por alto advertencias sobre riesgos de seguridad o dependencias del entorno, que el trabajo en equipo ayuda a clarificar.
+
+---
+
+## 4. Aprendizajes inesperados sobre mi rol
+
+A lo largo del proyecto, descubrí que la gestión de energía y rendimiento involucra un balance minucioso entre eficiencia, estabilidad y seguridad. Aprendí que herramientas como powertop pueden realizar ajustes agresivos que no siempre son convenientes en hardware antiguo, y que recomendaciones estándar no siempre mejoran la situación real de consumo o rendimiento. Me sorprendió cómo el ajuste de parámetros como vm.swappiness puede tener efectos secundarios de seguridad, y la importancia de colaborar estrechamente con los analistas de seguridad y soberanía tecnológica para validar cada cambio. También comprendí que el monitoreo continuo (por ejemplo, con vmstat y powertop) es clave para detectar mejoras objetivas y que el impacto de reemplazar componentes obsoletos (como un HDD por un SSD) supera las expectativas iniciales tanto en energía como en desempeño.
+
+---
+## 5. Autoevaluación y coevaluación
 
 ### Autoevaluación
 

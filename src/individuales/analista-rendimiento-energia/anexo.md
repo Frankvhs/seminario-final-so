@@ -1,6 +1,6 @@
 # Análisis de Equipos – Analista de Rendimiento y Energía
 
-- **Nombre del estudiante:** Frank Abel
+- **Nombre del estudiante:** Frank Abel Martínez Rodríguez
 - **Rol desempeñado:** Analista de Rendimiento y Energía
 - **Nombre del equipo:** Sumifer-2026
 - **Fecha de entrega:** 09/05/2026
@@ -74,10 +74,10 @@ Finalmente, aprendí a valorar la importancia de mantener registros detallados d
 
 ### Coevaluación
 
-| Compañero/a | Rol         | Aspecto positivo                              | Área de mejora                                  | Nota (2 a 5) |
-| ----------- | ----------- | --------------------------------------------- | ----------------------------------------------- | ------------ |
-| Alex        | Seguridad   | Detectó riesgos en los cambios de paginación  | Compartir lista de puertos con más anticipación | 4            |
-| Martín      | Soberanía   | Propuso alternativas a software privativo     | Mejorar comunicación entre sistemas             | 5            |
-| Rodny       | Coordinador | Facilitó el acuerdo de compromisos entre ejes | Podría moderar mejor discusiones técnicas       | 4            |
+| Compañero/a                         | Rol                                  | Aspecto positivo                                                                                       | Área de mejora                                       | Nota (2-5) |
+|------------------------------------- |--------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------|------------|
+| Martín Alejandro García Babastro     | Analista de Soberanía y Obsolescencia| Soluciones creativas (migración a software libre, uso de Wine), impulsa la soberanía.                 | Documentar pruebas, comandos y resultados más claro. | 4.5        |
+| Alex Dayan Rodríguez Hernández       | Analista de Seguridad                | Diagnóstico y plan de hardening exhaustivo, identifica riesgos reales y medidas prácticas.             | Ejemplificar con capturas de resultados y automatizar scripts. | 5          |
+| Rodny Roberto Estrada León           | Coordinador Técnico                  | Liderazgo integrador, matrices y mediación en conflictos, documentación clara y soluciones grupales.   | Centralizar aún más canales y uniformar reportes.    | 5          |
 
 ---

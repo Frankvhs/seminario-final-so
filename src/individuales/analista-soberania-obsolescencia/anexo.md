@@ -61,11 +61,11 @@ Durante el ejercicio de mi rol (Analista de Soberanía y Rendimiento) descubrí 
 
 ### Coevaluación (a cada compañero)
 
-| Compañero/a | Rol                     | Aspecto positivo (1)                             | Área de mejora (1)                   | Nota (2 a 5) |
-| :---------- | :---------------------- | :----------------------------------------------- | :----------------------------------- | :----------- |
-| [Nombre1]   | Analista de Rendimiento | Excelente midiendo tiempos con `time` y `vmstat` | Pudo compartir los comandos antes    | 5            |
-| [Nombre2]   | Analista de Seguridad   | Investigó bien alternativas a AutoCAD            | Lento en responder en el chat grupal | 4            |
-| [Nombre3]   | Coordinador             | Matriz de consistencia muy clara                 | El video de 5 min fue muy apresurado | 4            |
+| Compañero/a          | Rol                     | Aspecto positivo (1)                             | Área de mejora (1)                   | Nota (2 a 5) |
+| :----------          | :---------------------- | :----------------------------------------------- | :----------------------------------- | :----------- |
+| Frank Abel Martinez  | Analista de Rendimiento | Gran trabajo logrando una buena optimización de los equipos | Lento en la entrega de informes  | 5            |
+| Alex Dayan Rodriguez | Analista de Seguridad   | Detectó vulnerabilidades en la gestión de las credenciales  | Nada a destacar           | 5           |
+| Rodny Roberto Estrada| Coordinador             | Excelente distribución de tareas a los distintos roles      | Problemas de comunicación con el resto del equipo | 5            |
 
 ---
 

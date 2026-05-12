@@ -11,14 +11,12 @@
 
 | #   | Acción concreta (comando, configuración, script, etc.)       | Equipo (A, B o C según el documento Sumifer) | Resultado medible                                      |
 | :-- | :----------------------------------------------------------- | :------------------------------------------- | :----------------------------------------------------- |
-| 1   | Desactivar servicio de telemetría y actualizaciones forzadas | Equipo A, Equipo B, Equipo C                 | Reducción de uso de memoria RAM y aumento de vida útil |
-
-(solo en caso de mantenerse en Windows)
-| 2 | Migrar a navegador Firefox | Equipo A, Equipo B, Equipo C | Reducción de uso de CPU y RAM, navegación más rápida y segura con bloqueador de anuncios UBlock |
-| 3 | Migrar de Office a LibreOFfice | Equipo A, Equipo B, Equipo C | Eliminar dependencia de software privado y activadores piratas | |
-| 4 | Migrar de Outlook a Thunderbird | Equipo B (Directora Economica) | Eliminar seguimiento de usuario | |
-| 5 | Migrar de Windows a Ubuntu | Equipo A, Equipo B, Equipo C | Aumenta drásticamente el rendimiento en equipos de gama baja,por tanto aumenta la vida útil y disminuye la obsolescencia, Mejora la soberanía tecnologica al eliminar dependencias de software privado y reduce los riesgos de malware al no usar activadores crackeados |
-| 6 | Migrar de Autocad a QCad | Equipo C (RR.HH) | Soberanía tecnológica al no depender de empresa extranjera,mejora la seguridad al no usar versiones crackeadas,alternativa extremadamente ligera (257 mb) | | |
+| 1   | Desactivar servicio de telemetría y actualizaciones forzadas (solo si se mantiene en Windows | Equipo A, Equipo B, Equipo C                 | Reducción de uso de memoria RAM y aumento de vida útil |                                                                                                                        
+| 2   | Migrar a navegador Firefox | Equipo A, Equipo B, Equipo C | Reducción de uso de CPU y RAM, navegación más rápida y segura con bloqueador de anuncios UBlock |
+| 3   | Migrar de Office a LibreOFfice | Equipo A, Equipo B, Equipo C | Eliminar dependencia de software privado y activadores piratas | |
+| 4   | Migrar de Outlook a Thunderbird | Equipo B (Directora Economica) | Eliminar seguimiento de usuario | |
+| 5   | Migrar de Windows a Ubuntu | Equipo A, Equipo B, Equipo C | Aumenta drásticamente el rendimiento en equipos de gama baja,por tanto aumenta la vida útil y disminuye la obsolescencia, Mejora la soberanía tecnologica al eliminar dependencias de software privado y reduce los riesgos de malware al no usar activadores crackeados |
+| 6   | Migrar de Autocad a QCad | Equipo C (RR.HH) | Soberanía tecnológica al no depender de empresa extranjera,mejora la seguridad al no usar versiones crackeadas,alternativa extremadamente ligera (257 mb) | | |
 
 ---
 
